@@ -52,40 +52,58 @@ header {
 }
 
 /* ==========================================================================
-   3. НАЛАШТУВАННЯ, ЗБІЛЬШЕННЯ ТА ЦЕНТРУВАННЯ ЗОБРАЖЕНЬ
+   3. НАЛАШТУВАННЯ, ЗБІЛЬШЕННЯ ТА ІДЕАЛЬНЕ ЦЕНТРУВАННЯ
    ========================================================================== */
 .image-container {
     position: relative;
     width: 100%;
-    max-width: 460px; /* Збільшили, щоб малюнок не здавався малим */
-    margin: 0 auto;  /* Ідеальне центрування по центру екрана */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    max-width: 440px; /* Оптимальний збільшений розмір */
+    margin: 0 auto;  /* Центрує весь блок строго по центру екрана */
 }
 
-/* Шар 1: Фігура дівчини (Центрована) */
+/* Шар 1: Фігура дівчини */
 .layer-girl {
     display: block;
     width: 100%;
     height: auto;
-    max-height: 65vh; /* Трохи підняли висоту для кращого масштабу */
+    max-height: 60vh;
     object-fit: contain;
     background: transparent;
-    margin: 0 auto;
 }
 
-/* Шар 2: Королева (Ідеально накладається без зсувів) */
+/* Шар 2: Королева (Ідеальне накладання рамка-в-рамку з CorelDRAW) */
 .layer-queen {
     position: absolute;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%); /* Повне центрування шару королеви відносно дівчини */
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: contain;
     background: transparent;
     pointer-events: none;
+    
+    /* Повертаємо анімацію та фікси для чіткості ліній */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    image-rendering: -webkit-optimize-contrast; /* Зберігає чіткість ліній у Safari/Chrome */
+    
+    /* Запуск плавної анімації */
+    animation: queenFloat 4.5s ease-in-out infinite; 
+}
+
+/* Анімація левітації: м'який рух вгору-вниз */
+@keyframes queenFloat {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    50% {
+        transform: translate3d(0, -7px, 0); /* Делікатний підйом вгору */
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 /* ==========================================================================
@@ -252,7 +270,7 @@ header {
         gap: 40px;
     }
     .image-container {
-        max-width: 330px; /* Збалансований розмір для екранів телефонів */
+        max-width: 320px; /* Ідеальний розмір для телефонів */
     }
     .layer-girl {
         max-height: 55vh;
