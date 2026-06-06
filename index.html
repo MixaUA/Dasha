@@ -12,12 +12,14 @@
 <body>
     <div class="container">
         <header>
-            <!-- Наше очищене зображення з папки media -->
             <img src="media/Dasha.svg" alt="Даринка" class="main-image">
         </header>
 
         <main>
-            <!-- Аудіоплеєр (стилями зробимо фон прозорим) -->
+            <div class="motto-section">
+                <p class="motto-text">Live with purpose. Love without fear. Play your own game.</p>
+            </div>
+
             <div class="audio-player">
                 <div class="audio-controls">
                     <button id="playPauseBtn" class="control-btn" title="Відтворення / Пауза">
@@ -44,16 +46,10 @@
                 </div>
             </div>
 
-            <!-- Блок для головного тексту привітання з JSON -->
             <div class="birthday-section">
                 <div id="birthdayContent" class="birthday-text-container">
                     <div class="loading-text">Завантаження щирих слів...</div>
                 </div>
-            </div>
-
-            <!-- Головна цитата-девіз замість старої секції -->
-            <div class="motto-section">
-                <p class="motto-text">Live with purpose. Love without fear. Play your own game.</p>
             </div>
         </main>
 
@@ -62,7 +58,6 @@
         </footer>
     </div>
 
-    <!-- Аудіофайл -->
     <audio id="giftAudio" src="media/Gift_audio.mp3"></audio>
     <script src="script.js"></script>
 </body>
