@@ -3,7 +3,6 @@
     --text-primary: #1a1a1a;
     --text-secondary: #6c757d;
     --accent: #1a1a1a;
-    --btn-hover: #111111;
     --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -20,15 +19,15 @@ body {
     font-family: var(--font-body);
     color: var(--text-primary);
     background-color: var(--bg-app);
-    padding: 40px 20px;
+    padding: 60px 20px; /* Збільшено відступи від країв екрану */
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
-/* Контейнер повністю прозорий, без меж та тіней */
+/* Головний контейнер із комфортними відступами між блоками */
 .container {
     width: 100%;
     max-width: 640px;
@@ -37,61 +36,80 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 48px; /* Суттєво збільшено базовий відступ між секціями */
 }
 
 header {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 12px;
 }
 
-/* Налаштування розміру зображення дівчини з шахами */
+/* Враховано видовжені пропорції малюнка: збільшено висоту та ширину */
 .main-image {
     display: block;
     width: 100%;
-    max-width: 340px;
+    max-width: 380px;  /* Трохи збільшили максимальну ширину */
     height: auto;
-    max-height: 50vh;
+    max-height: 60vh; /* Збільшено висоту, щоб видовжена фігура виглядала величніше */
     object-fit: contain;
     background: transparent;
 }
 
-/* Аудіоплеєр на прозорому фоні */
+/* Секція для англійської цитати одразу під фото */
+.motto-section {
+    width: 100%;
+    padding: 0 10px;
+}
+
+.motto-text {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+    text-align: center;
+    font-style: italic;
+}
+
+/* Прозорий аудіоплеєр з додатковими відступами */
 .audio-player {
     background: transparent;
     border: none;
-    padding: 10px 0;
+    padding: 20px 0; /* Вертикальні відступи всередині плеєра */
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
 }
 
 .audio-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 24px;
+    gap: 28px; /* Відстань між кнопками */
 }
 
-/* Кнопки керування */
+/* КНОПКИ В СТИЛІ ONE LINE (Контурні, легкі) */
 .control-btn {
-    background: var(--text-primary) !important;
-    color: #ffffff !important;
-    border: none;
+    background: transparent !important; /* Повністю прозоре тло */
+    color: var(--text-primary) !important; /* Чорні іконки */
+    border: 1px solid var(--text-primary); /* Тонка лінія контуру */
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%; /* Зробив круглими для більш м'якого Line-art стилю */
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
     transition: var(--transition);
     outline: none;
 }
 
+/* Ефект при наведенні / активному стані — інтелігентний інверс */
 .control-btn:hover {
-    background: var(--btn-hover) !important;
+    background: var(--text-primary) !important;
+    color: #ffffff !important;
     transform: scale(1.05);
 }
 
@@ -99,15 +117,22 @@ header {
     transform: scale(0.95);
 }
 
-.control-btn svg {
-    width: 22px;
-    height: 22px;
+/* Якщо кнопка активована (наприклад, зацикленість) */
+.control-btn.active {
+    background: var(--text-primary) !important;
+    color: #ffffff !important;
 }
 
-/* Прогрес-бар */
+.control-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Легкий прогрес-бар */
 .progress-container {
-    width: 100%;
-    height: 4px;
+    width: 80%; /* Звужуємо лінію прогресу, щоб вона пасувала до кнопок */
+    margin: 0 auto;
+    height: 3px; /* Тонша лінія */
     background: #e9ecef;
     border-radius: 2px;
     overflow: hidden;
@@ -122,33 +147,35 @@ header {
     transition: width 0.1s linear;
 }
 
-/* Секція з текстом привітання */
+/* СЕКЦІЯ ТЕКСТУ ПРИВІТАННЯ — ЗВУЖЕНА ДО 80% */
 .birthday-section {
     width: 100%;
-    text-align: left; /* Текст читається краще, коли він зліва */
-    padding: 10px 0;
+    display: flex;
+    justify-content: center;
 }
 
 .birthday-text-container {
+    width: 80%; /* Текст займає 80% від загальної ширини сторінки */
     font-size: 1.05rem;
-    line-height: 1.75;
+    line-height: 1.8;
     color: #2c2c2c;
+    text-align: left;
 }
 
-/* Стилізація абзаців тексту, що прийдуть з JSON */
+/* Відступи між абзацами тексту привітання */
 .birthday-text-container p {
-    margin-bottom: 20px;
+    margin-bottom: 28px; /* Збільшено відстань між параграфами */
     text-align: justify;
 }
 
-/* Останній абзац (З любов'ю, мама і тато) */
+/* Підпис батьків у самому кінці */
 .birthday-text-container p:last-child {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 1.1rem;
-    margin-top: 30px;
+    font-size: 1.15rem;
+    margin-top: 40px;
     margin-bottom: 0;
-    text-align: right; /* Елегантний підпис справа */
+    text-align: right;
 }
 
 .loading-text {
@@ -157,48 +184,37 @@ header {
     font-size: 0.95rem;
 }
 
-/* Секція для головної цитати-девізу */
-.motto-section {
-    width: 100%;
-    border-top: 1px solid #e9ecef;
-    padding-top: 32px;
-    margin-top: 16px;
-}
-
-.motto-text {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: var(--text-primary);
-    text-align: center;
-    font-style: italic;
-}
-
-/* Футер */
+/* Ніжний футер */
 .footer {
     font-size: 0.75rem;
     color: var(--text-secondary);
     letter-spacing: 0.5px;
-    margin-top: 24px;
+    margin-top: 40px;
+    border-top: 1px solid #f1f3f5;
+    padding-top: 20px;
 }
 
-/* Адаптивність для мобільних пристроїв */
+/* АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ */
 @media (max-width: 480px) {
     body {
-        padding: 24px 16px;
+        padding: 40px 16px;
     }
     .container {
-        gap: 24px;
+        gap: 40px; /* Трохи компактніші відступи для малих екранів */
     }
     .main-image {
-        max-width: 280px;
+        max-width: 310px;
+        max-height: 55vh;
     }
     .birthday-text-container {
+        width: 88%; /* На зовсім крихітних екранах даємо тексту трохи більше місця */
         font-size: 1rem;
     }
     .motto-text {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
+    }
+    .audio-controls {
+        gap: 20px;
     }
 }
 
