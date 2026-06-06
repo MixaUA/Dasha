@@ -52,61 +52,40 @@ header {
 }
 
 /* ==========================================================================
-   3. МАГІЧНА ПОШАРОВА ЛЕВІТАЦІЯ (КОНТЕЙНЕР ЗОБРАЖЕНЬ)
+   3. НАЛАШТУВАННЯ, ЗБІЛЬШЕННЯ ТА ЦЕНТРУВАННЯ ЗОБРАЖЕНЬ
    ========================================================================== */
 .image-container {
     position: relative;
     width: 100%;
-    max-width: 380px; 
-    margin: 0 auto;
-    display: inline-block;
-    /* Трюк для збереження чіткості всього контейнера */
-    transform: translateZ(0);
-    -webkit-font-smoothing: antialiased;
+    max-width: 460px; /* Збільшили, щоб малюнок не здавався малим */
+    margin: 0 auto;  /* Ідеальне центрування по центру екрана */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Шар 1: Статична фігура дівчини */
+/* Шар 1: Фігура дівчини (Центрована) */
 .layer-girl {
     display: block;
     width: 100%;
     height: auto;
-    max-height: 60vh;
+    max-height: 65vh; /* Трохи підняли висоту для кращого масштабу */
     object-fit: contain;
     background: transparent;
+    margin: 0 auto;
 }
 
-/* Шар 2: Королева (Анімована з фіксом розмиття) */
+/* Шар 2: Королева (Ідеально накладається без зсувів) */
 .layer-queen {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Повне центрування шару королеви відносно дівчини */
     width: 100%;
     height: 100%;
     object-fit: contain;
     background: transparent;
     pointer-events: none;
-    
-    /* ФІКС РОЗМИТТЯ: змушуємо браузер тримати векторну чіткість ліній */
-    will-change: transform;
-    transform: translate3d(0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    
-    /* Запуск оптимізованої анімації польоту */
-    animation: queenFloat 5s ease-in-out infinite; 
-}
-
-/* Оптимізована 3D-анімація (запобігає 2D-розмиттю пікселів) */
-@keyframes queenFloat {
-    0% {
-        transform: translate3d(0, 0, 0) rotate(0.02deg);
-    }
-    50% {
-        transform: translate3d(0, -8px, 0) rotate(1deg); /* Рух у 3D-просторі зберігає різкість ліній */
-    }
-    100% {
-        transform: translate3d(0, 0, 0) rotate(0.02deg);
-    }
 }
 
 /* ==========================================================================
@@ -273,7 +252,7 @@ header {
         gap: 40px;
     }
     .image-container {
-        max-width: 310px;
+        max-width: 330px; /* Збалансований розмір для екранів телефонів */
     }
     .layer-girl {
         max-height: 55vh;
