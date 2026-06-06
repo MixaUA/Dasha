@@ -22,7 +22,7 @@ body {
     font-family: var(--font-body);
     color: var(--text-primary);
     background-color: var(--bg-app);
-    padding: 60px 20px; /* Великі комфортні відступи від країв екрану */
+    padding: 60px 20px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -41,7 +41,7 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 48px; /* Збільшено відступи між усіма головними блоками */
+    gap: 48px;
 }
 
 header {
@@ -52,16 +52,51 @@ header {
 }
 
 /* ==========================================================================
-   3. НАЛАШТУВАННЯ ВИДОВЖЕНОГО ЗОБРАЖЕННЯ
+   3. МАГІЧНА ПОШАРОВА ЛЕВІТАЦІЯ (КОНТЕЙНЕР ЗОБРАЖЕНЬ)
    ========================================================================== */
-.main-image {
+.image-container {
+    position: relative;
+    width: 100%;
+    max-width: 380px; /* Оптимальний збільшений розмір для видовженого малюнка */
+    margin: 0 auto;
+    display: inline-block;
+}
+
+/* Шар 1: Статична фігура дівчини */
+.layer-girl {
     display: block;
     width: 100%;
-    max-width: 380px;  /* Картинка стала більшою та виразнішою */
     height: auto;
-    max-height: 60vh; /* Враховано вертикальні пропорції фігури */
+    max-height: 60vh;
     object-fit: contain;
     background: transparent;
+}
+
+/* Шар 2: Королева, яка левітує точно над рукою завдяки однаковим рамкам Corel */
+.layer-queen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: transparent;
+    pointer-events: none; /* Щоб картинка не заважала клікам */
+    /* Запуск нескінченної плавної анімації польоту */
+    animation: queenFloat 4.5s ease-in-out infinite; 
+}
+
+/* Ефект дихання: м'яке погойдування вгору-вниз та мікро-нахил */
+@keyframes queenFloat {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(1deg); /* Плавно піднімається на 8px і ледь нахиляється */
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
 }
 
 /* ==========================================================================
@@ -98,14 +133,14 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 28px; /* Відстань між кнопками */
+    gap: 28px;
 }
 
-/* Кнопки: Завжди повністю прозорі всередині */
+/* Кнопки: Завжди прозорі всередині */
 .control-btn {
     background: transparent !important;
     color: var(--text-primary) !important;
-    border: 1px solid var(--text-primary); /* Тонка контурна лінія */
+    border: 1px solid var(--text-primary);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -115,30 +150,27 @@ header {
     border-radius: 50%;
     position: relative;
     outline: none;
-    /* М'яка анімація для повернення розміру */
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), 
                 box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Наведення: Тло НЕ заливається, лише легкий мікро-масштаб */
 .control-btn:hover {
     background: transparent !important;
     color: var(--text-primary) !important;
     transform: scale(1.04);
 }
 
-/* ЕФЕКТ КЛІКУ: кнопка пружинить, а прозоре коло розширюється назовні */
+/* ЕФЕКТ КЛІКУ: Кнопка пружинить, а прозоре контурне коло розширюється */
 .control-btn:active {
-    transform: scale(0.96); /* Зменшення в момент дотику */
-    box-shadow: 0 0 0 12px rgba(26, 26, 26, 0.08); /* Імпульсне коло розширення */
+    transform: scale(0.96);
+    box-shadow: 0 0 0 12px rgba(26, 26, 26, 0.08); 
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
-/* Активний стан кнопок (наприклад, зацикленість) */
 .control-btn.active {
     background: transparent !important;
     color: var(--text-primary) !important;
-    border-width: 2px; /* Контур стає трішки чіткішим */
+    border-width: 2px;
 }
 
 .control-btn svg {
@@ -147,9 +179,9 @@ header {
     fill: currentColor;
 }
 
-/* Невагомий тонкий прогрес-бар */
+/* Тонкий прогрес-бар */
 .progress-container {
-    width: 80%; /* Звужено лінію, щоб пасувала до композиції */
+    width: 80%;
     margin: 0 auto;
     height: 3px;
     background: #e9ecef;
@@ -176,7 +208,7 @@ header {
 }
 
 .birthday-text-container {
-    width: 80%; /* Створюємо елегантні книжкові поля по боках тексту */
+    width: 80%; /* Створюємо елегантні поля по боках */
     font-size: 1.05rem;
     line-height: 1.8;
     color: #2c2c2c;
@@ -184,18 +216,18 @@ header {
 }
 
 .birthday-text-container p {
-    margin-bottom: 28px; /* Великі відступи між абзацами для зручного читання */
+    margin-bottom: 28px;
     text-align: justify;
 }
 
-/* Підпис батьків у самому кінці тексту */
+/* Підпис батьків */
 .birthday-text-container p:last-child {
     font-family: var(--font-heading);
     font-weight: 700;
     font-size: 1.15rem;
     margin-top: 40px;
     margin-bottom: 0;
-    text-align: right; /* Елегантне вирівнювання підпису по правому краю */
+    text-align: right;
 }
 
 .loading-text {
@@ -228,14 +260,16 @@ header {
         padding: 40px 16px;
     }
     .container {
-        gap: 40px; /* Оптимальні відступи для мобільних екранів */
+        gap: 40px;
     }
-    .main-image {
+    .image-container {
         max-width: 310px;
+    }
+    .layer-girl {
         max-height: 55vh;
     }
     .birthday-text-container {
-        width: 88%; /* Трохи більше місця для тексту на малих дисплеях */
+        width: 88%;
         font-size: 1rem;
     }
     .motto-text {
