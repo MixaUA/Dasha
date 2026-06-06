@@ -57,9 +57,12 @@ header {
 .image-container {
     position: relative;
     width: 100%;
-    max-width: 380px; /* Оптимальний збільшений розмір для видовженого малюнка */
+    max-width: 380px; 
     margin: 0 auto;
     display: inline-block;
+    /* Трюк для збереження чіткості всього контейнера */
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
 }
 
 /* Шар 1: Статична фігура дівчини */
@@ -72,7 +75,7 @@ header {
     background: transparent;
 }
 
-/* Шар 2: Королева, яка левітує точно над рукою завдяки однаковим рамкам Corel */
+/* Шар 2: Королева (Анімована з фіксом розмиття) */
 .layer-queen {
     position: absolute;
     top: 0;
@@ -81,21 +84,28 @@ header {
     height: 100%;
     object-fit: contain;
     background: transparent;
-    pointer-events: none; /* Щоб картинка не заважала клікам */
-    /* Запуск нескінченної плавної анімації польоту */
-    animation: queenFloat 4.5s ease-in-out infinite; 
+    pointer-events: none;
+    
+    /* ФІКС РОЗМИТТЯ: змушуємо браузер тримати векторну чіткість ліній */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    
+    /* Запуск оптимізованої анімації польоту */
+    animation: queenFloat 5s ease-in-out infinite; 
 }
 
-/* Ефект дихання: м'яке погойдування вгору-вниз та мікро-нахил */
+/* Оптимізована 3D-анімація (запобігає 2D-розмиттю пікселів) */
 @keyframes queenFloat {
     0% {
-        transform: translateY(0px) rotate(0deg);
+        transform: translate3d(0, 0, 0) rotate(0.02deg);
     }
     50% {
-        transform: translateY(-8px) rotate(1deg); /* Плавно піднімається на 8px і ледь нахиляється */
+        transform: translate3d(0, -8px, 0) rotate(1deg); /* Рух у 3D-просторі зберігає різкість ліній */
     }
     100% {
-        transform: translateY(0px) rotate(0deg);
+        transform: translate3d(0, 0, 0) rotate(0.02deg);
     }
 }
 
@@ -160,7 +170,7 @@ header {
     transform: scale(1.04);
 }
 
-/* ЕФЕКТ КЛІКУ: Кнопка пружинить, а прозоре контурне коло розширюється */
+/* ЕФЕКТ КЛІКУ */
 .control-btn:active {
     transform: scale(0.96);
     box-shadow: 0 0 0 12px rgba(26, 26, 26, 0.08); 
@@ -208,7 +218,7 @@ header {
 }
 
 .birthday-text-container {
-    width: 80%; /* Створюємо елегантні поля по боках */
+    width: 80%; 
     font-size: 1.05rem;
     line-height: 1.8;
     color: #2c2c2c;
