@@ -1,3 +1,6 @@
+/* ==========================================================================
+   1. ГЛОБАЛЬНІ НАЛАШТУВАННЯ ТА ЗМІННІ
+   ========================================================================== */
 :root {
     --bg-app: #ffffff;
     --text-primary: #1a1a1a;
@@ -19,7 +22,7 @@ body {
     font-family: var(--font-body);
     color: var(--text-primary);
     background-color: var(--bg-app);
-    padding: 60px 20px; /* Збільшено відступи від країв екрану */
+    padding: 60px 20px; /* Великі комфортні відступи від країв екрану */
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -27,7 +30,9 @@ body {
     line-height: 1.7;
 }
 
-/* Головний контейнер із комфортними відступами між блоками */
+/* ==========================================================================
+   2. СТРУКТУРА КОНТЕЙНЕРА (ПОВІТРЯНІ ВІДСТУПИ)
+   ========================================================================== */
 .container {
     width: 100%;
     max-width: 640px;
@@ -36,7 +41,7 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 48px; /* Суттєво збільшено базовий відступ між секціями */
+    gap: 48px; /* Збільшено відступи між усіма головними блоками */
 }
 
 header {
@@ -46,18 +51,22 @@ header {
     margin-bottom: 12px;
 }
 
-/* Враховано видовжені пропорції малюнка: збільшено висоту та ширину */
+/* ==========================================================================
+   3. НАЛАШТУВАННЯ ВИДОВЖЕНОГО ЗОБРАЖЕННЯ
+   ========================================================================== */
 .main-image {
     display: block;
     width: 100%;
-    max-width: 380px;  /* Трохи збільшили максимальну ширину */
+    max-width: 380px;  /* Картинка стала більшою та виразнішою */
     height: auto;
-    max-height: 60vh; /* Збільшено висоту, щоб видовжена фігура виглядала величніше */
+    max-height: 60vh; /* Враховано вертикальні пропорції фігури */
     object-fit: contain;
     background: transparent;
 }
 
-/* Секція для англійської цитати одразу під фото */
+/* ==========================================================================
+   4. СЕКЦІЯ ГОЛОВНОЇ ЦИТАТИ (ОДРАЗУ ПІД ФОТО)
+   ========================================================================== */
 .motto-section {
     width: 100%;
     padding: 0 10px;
@@ -73,11 +82,13 @@ header {
     font-style: italic;
 }
 
-/* Прозорий аудіоплеєр з додатковими відступами */
+/* ==========================================================================
+   5. ПРЕМІАЛЬНИЙ ONE LINE АУДІОПЛЕЄР
+   ========================================================================== */
 .audio-player {
     background: transparent;
     border: none;
-    padding: 20px 0; /* Вертикальні відступи всередині плеєра */
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -90,11 +101,11 @@ header {
     gap: 28px; /* Відстань між кнопками */
 }
 
-/* КНОПКИ В СТИЛІ ONE LINE (Контурні, легкі) */
+/* Кнопки: Завжди повністю прозорі всередині */
 .control-btn {
-    background: transparent !important; /* Повністю прозоре тло */
-    color: var(--text-primary) !important; /* Чорні іконки */
-    border: 1px solid var(--text-primary); /* Тонка лінія контуру */
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--text-primary); /* Тонка контурна лінія */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -102,37 +113,45 @@ header {
     width: 52px;
     height: 52px;
     border-radius: 50%;
-    transition: var(--transition);
+    position: relative;
     outline: none;
+    /* М'яка анімація для повернення розміру */
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Ефект при наведенні / активному стані — інтелігентний інверс */
+/* Наведення: Тло НЕ заливається, лише легкий мікро-масштаб */
 .control-btn:hover {
-    background: var(--text-primary) !important;
-    color: #ffffff !important;
-    transform: scale(1.05);
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    transform: scale(1.04);
 }
 
+/* ЕФЕКТ КЛІКУ: кнопка пружинить, а прозоре коло розширюється назовні */
 .control-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.96); /* Зменшення в момент дотику */
+    box-shadow: 0 0 0 12px rgba(26, 26, 26, 0.08); /* Імпульсне коло розширення */
+    transition: transform 0.1s, box-shadow 0.1s;
 }
 
-/* Якщо кнопка активована (наприклад, зацикленість) */
+/* Активний стан кнопок (наприклад, зацикленість) */
 .control-btn.active {
-    background: var(--text-primary) !important;
-    color: #ffffff !important;
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    border-width: 2px; /* Контур стає трішки чіткішим */
 }
 
 .control-btn svg {
     width: 20px;
     height: 20px;
+    fill: currentColor;
 }
 
-/* Легкий прогрес-бар */
+/* Невагомий тонкий прогрес-бар */
 .progress-container {
-    width: 80%; /* Звужуємо лінію прогресу, щоб вона пасувала до кнопок */
+    width: 80%; /* Звужено лінію, щоб пасувала до композиції */
     margin: 0 auto;
-    height: 3px; /* Тонша лінія */
+    height: 3px;
     background: #e9ecef;
     border-radius: 2px;
     overflow: hidden;
@@ -147,7 +166,9 @@ header {
     transition: width 0.1s linear;
 }
 
-/* СЕКЦІЯ ТЕКСТУ ПРИВІТАННЯ — ЗВУЖЕНА ДО 80% */
+/* ==========================================================================
+   6. СЕКЦІЯ ТЕКСТУ ПРИВІТАННЯ (ЗВУЖЕНА ДО 80%)
+   ========================================================================== */
 .birthday-section {
     width: 100%;
     display: flex;
@@ -155,27 +176,26 @@ header {
 }
 
 .birthday-text-container {
-    width: 80%; /* Текст займає 80% від загальної ширини сторінки */
+    width: 80%; /* Створюємо елегантні книжкові поля по боках тексту */
     font-size: 1.05rem;
     line-height: 1.8;
     color: #2c2c2c;
     text-align: left;
 }
 
-/* Відступи між абзацами тексту привітання */
 .birthday-text-container p {
-    margin-bottom: 28px; /* Збільшено відстань між параграфами */
+    margin-bottom: 28px; /* Великі відступи між абзацами для зручного читання */
     text-align: justify;
 }
 
-/* Підпис батьків у самому кінці */
+/* Підпис батьків у самому кінці тексту */
 .birthday-text-container p:last-child {
     font-family: var(--font-heading);
     font-weight: 700;
     font-size: 1.15rem;
     margin-top: 40px;
     margin-bottom: 0;
-    text-align: right;
+    text-align: right; /* Елегантне вирівнювання підпису по правому краю */
 }
 
 .loading-text {
@@ -184,7 +204,9 @@ header {
     font-size: 0.95rem;
 }
 
-/* Ніжний футер */
+/* ==========================================================================
+   7. СЛУЖБОВІ СТИЛІ ТА ФУТЕР
+   ========================================================================== */
 .footer {
     font-size: 0.75rem;
     color: var(--text-secondary);
@@ -194,20 +216,26 @@ header {
     padding-top: 20px;
 }
 
-/* АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ */
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   8. АДАПТИВНІСТЬ ДЛЯ СМАРТФОНІВ
+   ========================================================================== */
 @media (max-width: 480px) {
     body {
         padding: 40px 16px;
     }
     .container {
-        gap: 40px; /* Трохи компактніші відступи для малих екранів */
+        gap: 40px; /* Оптимальні відступи для мобільних екранів */
     }
     .main-image {
         max-width: 310px;
         max-height: 55vh;
     }
     .birthday-text-container {
-        width: 88%; /* На зовсім крихітних екранах даємо тексту трохи більше місця */
+        width: 88%; /* Трохи більше місця для тексту на малих дисплеях */
         font-size: 1rem;
     }
     .motto-text {
@@ -216,8 +244,4 @@ header {
     .audio-controls {
         gap: 20px;
     }
-}
-
-.hidden {
-    display: none !important;
 }
