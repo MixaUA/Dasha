@@ -49,16 +49,17 @@ header {
     justify-content: center;
     align-items: center;
     margin-bottom: 12px;
+    width: 100%;
 }
 
 /* ==========================================================================
-   3. НАЛАШТУВАННЯ, ЗБІЛЬШЕННЯ ТА ІДЕАЛЬНЕ ЦЕНТРУВАННЯ
+   3. НАЛАШТУВАННЯ, ЗБІЛЬШЕННЯ ТА ЗАЛІЗОБЕТОННЕ ЦЕНТРУВАННЯ
    ========================================================================== */
 .image-container {
     position: relative;
     width: 100%;
-    max-width: 440px; /* Оптимальний збільшений розмір */
-    margin: 0 auto;  /* Центрує весь блок строго по центру екрана */
+    max-width: 460px; /* Збільшений масштаб для солідного вигляду */
+    margin: 0 auto;   /* Строге центрування всього блоку */
 }
 
 /* Шар 1: Фігура дівчини */
@@ -68,10 +69,9 @@ header {
     height: auto;
     max-height: 60vh;
     object-fit: contain;
-    background: transparent;
 }
 
-/* Шар 2: Королева (Ідеальне накладання рамка-в-рамку з CorelDRAW) */
+/* Шар 2: Королева (Анімована, ідеально суміщена з girl.png) */
 .layer-queen {
     position: absolute;
     top: 0;
@@ -79,30 +79,22 @@ header {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    background: transparent;
     pointer-events: none;
     
-    /* Повертаємо анімацію та фікси для чіткості ліній */
-    will-change: transform;
-    transform: translate3d(0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    image-rendering: -webkit-optimize-contrast; /* Зберігає чіткість ліній у Safari/Chrome */
-    
-    /* Запуск плавної анімації */
+    /* Оскільки це PNG, анімація буде абсолютно чіткою та плавною */
     animation: queenFloat 4.5s ease-in-out infinite; 
 }
 
-/* Анімація левітації: м'який рух вгору-вниз */
+/* Плавна левітація без замилювання ліній */
 @keyframes queenFloat {
     0% {
-        transform: translate3d(0, 0, 0);
+        transform: translateY(0px);
     }
     50% {
-        transform: translate3d(0, -7px, 0); /* Делікатний підйом вгору */
+        transform: translateY(-8px); /* М'який підйом вгору */
     }
     100% {
-        transform: translate3d(0, 0, 0);
+        transform: translateY(0px);
     }
 }
 
@@ -143,7 +135,6 @@ header {
     gap: 28px;
 }
 
-/* Кнопки: Завжди прозорі всередині */
 .control-btn {
     background: transparent !important;
     color: var(--text-primary) !important;
@@ -167,7 +158,6 @@ header {
     transform: scale(1.04);
 }
 
-/* ЕФЕКТ КЛІКУ */
 .control-btn:active {
     transform: scale(0.96);
     box-shadow: 0 0 0 12px rgba(26, 26, 26, 0.08); 
@@ -186,7 +176,6 @@ header {
     fill: currentColor;
 }
 
-/* Тонкий прогрес-бар */
 .progress-container {
     width: 80%;
     margin: 0 auto;
@@ -227,7 +216,6 @@ header {
     text-align: justify;
 }
 
-/* Підпис батьків */
 .birthday-text-container p:last-child {
     font-family: var(--font-heading);
     font-weight: 700;
@@ -270,7 +258,7 @@ header {
         gap: 40px;
     }
     .image-container {
-        max-width: 320px; /* Ідеальний розмір для телефонів */
+        max-width: 340px; /* Оптимальне збільшення на мобільних */
     }
     .layer-girl {
         max-height: 55vh;
