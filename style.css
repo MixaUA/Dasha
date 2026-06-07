@@ -50,9 +50,9 @@ body {
 .media-wrapper {
     position: relative;
     width: 100%;
-    max-width: 440px; /* Оптимальний збільшений розмір */
+    max-width: 440px; 
     margin: 0 auto;
-    min-height: 320px; /* Запобігає стрибкам інтерфейсу при підміні екранів */
+    min-height: 320px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,7 +76,7 @@ body {
     object-fit: contain;
 }
 
-/* Шар 2: Королева (Твоя анімація левітації з фіксом розмиття ліній) */
+/* Шар 2: Королева (Анімація левітації з фіксом розмиття ліній) */
 .layer-queen {
     position: absolute;
     top: 0;
@@ -84,28 +84,20 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    pointer-events: none; /* Щоб картинка не перехоплювала кліки */
+    pointer-events: none; 
     
-    /* ФІКС РОЗМИТТЯ: змушуємо браузер тримати чіткість ліній під час руху */
     will-change: transform;
     transform: translate3d(0, 0, 0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     
-    /* Запуск нескінченної плавної левітації */
     animation: queenFloat 4.5s ease-in-out infinite; 
 }
 
 @keyframes queenFloat {
-    0% {
-        transform: translate3d(0, 0, 0);
-    }
-    50% {
-        transform: translate3d(0, -7px, 0); /* М'який підйом вгору */
-    }
-    100% {
-        transform: translate3d(0, 0, 0);
-    }
+    0% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -7px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
 }
 
 /* Вікно кліпу mp4 */
@@ -142,7 +134,7 @@ body {
 }
 
 /* ==========================================================================
-   5. ПРЕМІАЛЬНІ ПРОЗОРІ КНОПКИ ТА ПРОГРЕС-БАР
+   5. ПРЕМІАЛЬНІ ПРОЗОРІ КНОПКИ ТА КОНТРАСТНИЙ ПРОГРЕС-БАР
    ========================================================================== */
 .audio-player {
     background: transparent;
@@ -160,7 +152,6 @@ body {
     gap: 28px;
 }
 
-/* Кнопки: Завжди прозорі всередині */
 .control-btn {
     background: transparent !important;
     color: var(--text-primary) !important;
@@ -202,25 +193,27 @@ body {
     fill: currentColor;
 }
 
-/* Прогрес-бар із чутливим полем для зручного тач-кліку перемотування */
+/* Виправлений, чітко видимий контейнер прогрес-бара */
 .progress-container {
     width: 80%;
     margin: 0 auto;
-    height: 4px;
-    background: #e9ecef;
-    border-radius: 2px;
+    height: 4px;                  /* Витончена тонка лінія */
+    background: #e0e0e0;          /* Контрастний сірий трек, помітний на білому тлі */
+    border-radius: 4px;
     position: relative;
     cursor: pointer;
-    padding: 6px 0; /* Зона для легкого попадання пальцем */
-    background-clip: content-box;
+    padding: 8px 0;               /* Невидима широка зона для легкого тачу пальцем */
+    background-clip: content-box; /* Залишає колір фону тільки всередині 4px лінії */
 }
 
+/* Лінія заповнення (прогрес кліпу) */
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: var(--text-primary);
-    border-radius: 2px;
-    pointer-events: none;
+    background: var(--text-primary); /* Глибокий контрастний чорний колір */
+    border-radius: 4px;
+    pointer-events: none; 
+    display: block !important;       /* Гарантує відображення шару */
 }
 
 /* ==========================================================================
