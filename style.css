@@ -100,14 +100,14 @@ body {
     100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Вікно кліпу mp4 */
+/* Вікно кліпу mp4 (ПРИБРАЛИ чорний фон, щоб не було прямокутника при старті) */
 #videoDisplay video {
     width: 100%;
     height: auto;
     max-height: 60vh;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    background: #000000;
+    background: transparent; /* Відео плавно з'являється без чорних спалахів */
 }
 
 @keyframes fadeIn {
@@ -134,7 +134,7 @@ body {
 }
 
 /* ==========================================================================
-   5. ПРЕМІАЛЬНІ ПРОЗОРІ КНОПКИ ТА КОНТРАСТНИЙ ПРОГРЕС-БАР
+   5. ПРЕМІАЛЬНІ ПРОЗОРІ КНОПКИ ТА ЗАЛІЗОБЕТОННИЙ ПРОГРЕС-БАР
    ========================================================================== */
 .audio-player {
     background: transparent;
@@ -193,27 +193,27 @@ body {
     fill: currentColor;
 }
 
-/* Виправлений, чітко видимий контейнер прогрес-бара */
+/* Нові залізобетонні стилі доріжки треку — тепер 100% видимі на всіх смартфонах */
 .progress-container {
     width: 80%;
     margin: 0 auto;
-    height: 4px;                  /* Витончена тонка лінія */
-    background: #e0e0e0;          /* Контрастний сірий трек, помітний на білому тлі */
-    border-radius: 4px;
+    height: 6px;                 /* Зробили трішки товщою для кращої видимості */
+    background-color: #e0e0e0;   /* Контрастна сіра підкладка */
+    border-radius: 3px;
     position: relative;
     cursor: pointer;
-    padding: 8px 0;               /* Невидима широка зона для легкого тачу пальцем */
-    background-clip: content-box; /* Залишає колір фону тільки всередині 4px лінії */
 }
 
-/* Лінія заповнення (прогрес кліпу) */
+/* Лінія заповнення, яка буде чітко бігти вперед */
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: var(--text-primary); /* Глибокий контрастний чорний колір */
-    border-radius: 4px;
+    background-color: var(--text-primary); /* Глибокий чорний колір */
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
     pointer-events: none; 
-    display: block !important;       /* Гарантує відображення шару */
 }
 
 /* ==========================================================================
