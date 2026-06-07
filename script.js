@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     video.addEventListener('waiting', () => {
         if (!video.paused) {
             videoDisplay.classList.add('hidden');
-            videoLoader.classList.remove('hidden'); // Показуємо твій лоадер
+            videoLoader.classList.remove('hidden'); // Показуємо лоадер
         }
     });
 
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Перемотування кліком/тапом
+    // ВИПРАВЛЕНО: Перемотування кліком/тапом БЕЗ БЛИМАННЯ ЕКРАНІВ
     progressContainer.addEventListener('click', (e) => {
         if (video.duration) {
             const rect = progressContainer.getBoundingClientRect();
@@ -138,10 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const width = rect.width;
             const clickPercentage = clickX / width;
             
-            if (video.paused) {
-                imageDisplay.classList.add('hidden');
-                videoDisplay.classList.remove('hidden');
-            }
+            // Просто міняємо час всередині плеєра, нічого не ховаючи
             video.currentTime = clickPercentage * video.duration;
         }
     });
