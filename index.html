@@ -11,9 +11,14 @@
 </head>
 <body>
     <div class="container">
-        <header class="image-container">
-            <img src="media/girl.png" alt="Даринка" class="layer-girl">
-            <img src="media/queen.png" alt="Шахова королева" class="layer-queen">
+        <header class="media-wrapper">
+            <div id="imageDisplay" class="media-box">
+                <img src="media/girl.png" alt="Даринка" class="layer-girl">
+                <img src="media/queen.png" alt="Шахова королева" class="layer-queen">
+            </div>
+            <div id="videoDisplay" class="media-box hidden">
+                <video id="giftVideo" src="media/Gift_video.mp4" playsinline></video>
+            </div>
         </header>
 
         <main>
@@ -42,7 +47,7 @@
                         </svg>
                     </button>
                 </div>
-                <div class="progress-container">
+                <div id="progressContainer" class="progress-container">
                     <div id="progress" class="progress-bar"></div>
                 </div>
             </div>
@@ -59,7 +64,6 @@
         </footer>
     </div>
 
-    <audio id="giftAudio" src="media/Gift_audio.mp3"></audio>
     <script src="script.js"></script>
 </body>
 </html>
