@@ -45,7 +45,7 @@ body {
 }
 
 /* ==========================================================================
-   3. КОНТЕЙНЕРИ МЕДІА (ІДЕАЛЬНЕ ЦЕНТРУВАННЯ ТА НАКЛАДАННЯ)
+   3. КОНТЕЙНЕРИ МЕДІА (ЦЕНТРУВАННЯ)
    ========================================================================== */
 .media-wrapper {
     position: relative;
@@ -76,7 +76,7 @@ body {
     object-fit: contain;
 }
 
-/* Шар 2: Королева (Анімація левітації з фіксом розмиття ліній) */
+/* Шар 2: Королева (Анімація левітації) */
 .layer-queen {
     position: absolute;
     top: 0;
@@ -100,19 +100,47 @@ body {
     100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Вікно кліпу mp4 (ПРИБРАЛИ чорний фон, щоб не було прямокутника при старті) */
+/* Твоє відеовікно: жодних фонів та рамок наперед, щоб не було порожніх прямокутників */
 #videoDisplay video {
     width: 100%;
     height: auto;
     max-height: 60vh;
     border-radius: 8px;
+    background: transparent; 
+}
+
+/* Відео показується з гарною м'якою тінню тільки коли реально грає */
+#videoDisplay.video-playing video {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    background: transparent; /* Відео плавно з'являється без чорних спалахів */
 }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.98); }
     to { opacity: 1; transform: scale(1); }
+}
+
+/* ==========================================================================
+   ТАКИЙ ОСОБЛИВИЙ ТВОЙ ЛОАДЕР ДЛЯ ВІДЕО
+   ========================================================================== */
+.loader {
+    width: fit-content;
+    font-size: 32px; /* Трохи оптимізували масштаб для мобільних */
+    line-height: 1.5;
+    font-family: var(--font-heading);
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #0000;
+    -webkit-text-stroke: 1px var(--text-primary);
+    background:
+        radial-gradient(1.13em at 50% 1.6em, var(--text-primary) 99%, #0000 101%) calc(50% - 1.6em) 0/3.2em 100% text,
+        radial-gradient(1.13em at 50% -0.8em, #0000 99%, var(--text-primary) 101%) 50% .8em/3.2em 100% repeat-x text;
+    animation: l9 2s linear infinite;
+}
+.loader:before {
+    content: "Loading";
+}
+@keyframes l9 {
+    to { background-position: calc(50% + 1.6em) 0, calc(50% + 3.2em) .8em; }
 }
 
 /* ==========================================================================
@@ -134,7 +162,7 @@ body {
 }
 
 /* ==========================================================================
-   5. ПРЕМІАЛЬНІ ПРОЗОРІ КНОПКИ ТА ЗАЛІЗОБЕТОННИЙ ПРОГРЕС-БАР
+   5. ПРЕМІАЛЬНІ ПРОЗОРІ КНОПКИ ТА ПРОГРЕС-БАР
    ========================================================================== */
 .audio-player {
     background: transparent;
@@ -193,22 +221,20 @@ body {
     fill: currentColor;
 }
 
-/* Нові залізобетонні стилі доріжки треку — тепер 100% видимі на всіх смартфонах */
 .progress-container {
     width: 80%;
     margin: 0 auto;
-    height: 6px;                 /* Зробили трішки товщою для кращої видимості */
-    background-color: #e0e0e0;   /* Контрастна сіра підкладка */
+    height: 6px;
+    background-color: #e0e0e0;
     border-radius: 3px;
     position: relative;
     cursor: pointer;
 }
 
-/* Лінія заповнення, яка буде чітко бігти вперед */
 .progress-bar {
     height: 100%;
     width: 0%;
-    background-color: var(--text-primary); /* Глибокий чорний колір */
+    background-color: var(--text-primary);
     border-radius: 3px;
     position: absolute;
     top: 0;
@@ -217,7 +243,7 @@ body {
 }
 
 /* ==========================================================================
-   6. СЕКЦІЯ ТЕКСТУ ПРИВІТАННЯ (ЗВУЖЕНА ДО 80%)
+   6. СЕКЦІЯ ТЕКСТУ ПРИВІТАННЯ
    ========================================================================== */
 .birthday-section {
     width: 100%;
@@ -279,4 +305,5 @@ body {
     .birthday-text-container { width: 88%; font-size: 1rem; }
     .motto-text { font-size: 1.15rem; }
     .audio-controls { gap: 20px; }
+    .loader { font-size: 26px; } /* Трішки менше на мікро-екранах */
 }
