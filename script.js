@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressBar = document.getElementById('progress');
     
     let isLooping = false;
+    let isSeeking = false; // Прапорець: чи йде зараз перемотування
 
     // ==========================================================================
     // КРОК 1: НАЙВИЩИЙ ПРІОРИТЕТ — МИТТЄВО ВИВОДИМО ТЕКСТ ПРИВІТАННЯ
@@ -56,27 +57,35 @@ document.addEventListener('DOMContentLoaded', () => {
         videoDisplay.classList.remove('video-playing');
         videoLoader.classList.add('hidden');
         imageDisplay.classList.remove('hidden');
+        isSeeking = false;
     }
 
-    // Розумні події відео: ловимо буферизацію (завантаження) на телефонах
+    // Розумні події відео: ловимо буферизацію (завантаження), АЛЕ ігноруємо при перемотуванні
     video.addEventListener('waiting', () => {
-        if (!video.paused) {
+        // Якщо відео задумалося ПІД ЧАС перемотування — лоадер НЕ вмикаємо, щоб не було блимання
+        if (!video.paused && !isSeeking) {
             videoDisplay.classList.add('hidden');
-            videoLoader.classList.remove('hidden'); // Показуємо лоадер
+            videoLoader.classList.remove('hidden'); 
         }
     });
 
     video.addEventListener('playing', () => {
-        videoLoader.classList.add('hidden');       // Ховаємо лоадер
-        videoDisplay.classList.remove('hidden');   // Показуємо відео
-        videoDisplay.classList.add('video-playing'); // Активуємо гарну тінь
+        videoLoader.classList.add('hidden');       
+        videoDisplay.classList.remove('hidden');   
+        videoDisplay.classList.add('video-playing'); 
+        isSeeking = false; // Перемотування точно завершено, відео грає
+    });
+
+    // Подія seeked спрацьовує, коли браузер успішно перестрибнув на потрібну секунду
+    video.addEventListener('seeked', () => {
+        isSeeking = false; 
     });
 
     // Кнопка Play / Pause
     playPauseBtn.addEventListener('click', () => {
         if (video.paused) {
             imageDisplay.classList.add('hidden');
-            videoLoader.classList.remove('hidden'); // Відразу вмикаємо лоадер
+            videoLoader.classList.remove('hidden'); 
             video.play().catch(() => {
                 resetToImageState();
             });
@@ -95,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         video.currentTime = 0;
         playIcon.classList.remove('hidden');
         pauseIcon.classList.add('hidden');
-        resetToImageState(); // Повертаємо малюнки назад
+        resetToImageState(); 
     });
 
     // Кліп закінчився
@@ -130,15 +139,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ВИПРАВЛЕНО: Перемотування кліком/тапом БЕЗ БЛИМАННЯ ЕКРАНІВ
+    // ОНОВЛЕНО: Безпечне перемотування з блокуванням помилкових викликів лоадера
     progressContainer.addEventListener('click', (e) => {
         if (video.duration) {
+            isSeeking = true; // Виставляємо захист: зараз триває зміна часу!
+            
             const rect = progressContainer.getBoundingClientRect();
             const clickX = e.clientX - rect.left;
             const width = rect.width;
             const clickPercentage = clickX / width;
             
-            // Просто міняємо час всередині плеєра, нічого не ховаючи
             video.currentTime = clickPercentage * video.duration;
         }
     });
