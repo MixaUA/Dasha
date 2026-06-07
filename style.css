@@ -31,7 +31,7 @@ body {
 }
 
 /* ==========================================================================
-   2. СТРУКТУРА КОНТЕЙНЕРА (ПОВІТРЯНІ ВІДСТУПИ)
+   2. СТРУКТУРА КОНТЕЙНЕРА
    ========================================================================== */
 .container {
     width: 100%;
@@ -44,22 +44,27 @@ body {
     gap: 48px;
 }
 
-header {
+/* ==========================================================================
+   3. КОНТЕЙНЕРИ МЕДІА (ІДЕАЛЬНЕ ЦЕНТРУВАННЯ ТА НАКЛАДАННЯ)
+   ========================================================================== */
+.media-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 440px; /* Оптимальний збільшений розмір */
+    margin: 0 auto;
+    min-height: 320px; /* Запобігає стрибкам інтерфейсу при підміні екранів */
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 12px;
-    width: 100%;
 }
 
-/* ==========================================================================
-   3. НАЛАШТУВАННЯ, ЗБІЛЬШЕННЯ ТА ЗАЛІЗОБЕТОННЕ ЦЕНТРУВАННЯ
-   ========================================================================== */
-.image-container {
-    position: relative;
+.media-box {
     width: 100%;
-    max-width: 460px; /* Збільшений масштаб для солідного вигляду */
-    margin: 0 auto;   /* Строге центрування всього блоку */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.4s ease-in-out;
 }
 
 /* Шар 1: Фігура дівчини */
@@ -71,7 +76,7 @@ header {
     object-fit: contain;
 }
 
-/* Шар 2: Королева (Анімована, ідеально суміщена з girl.png) */
+/* Шар 2: Королева (Твоя анімація левітації з фіксом розмиття ліній) */
 .layer-queen {
     position: absolute;
     top: 0;
@@ -79,27 +84,47 @@ header {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    pointer-events: none;
+    pointer-events: none; /* Щоб картинка не перехоплювала кліки */
     
-    /* Оскільки це PNG, анімація буде абсолютно чіткою та плавною */
+    /* ФІКС РОЗМИТТЯ: змушуємо браузер тримати чіткість ліній під час руху */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    
+    /* Запуск нескінченної плавної левітації */
     animation: queenFloat 4.5s ease-in-out infinite; 
 }
 
-/* Плавна левітація без замилювання ліній */
 @keyframes queenFloat {
     0% {
-        transform: translateY(0px);
+        transform: translate3d(0, 0, 0);
     }
     50% {
-        transform: translateY(-8px); /* М'який підйом вгору */
+        transform: translate3d(0, -7px, 0); /* М'який підйом вгору */
     }
     100% {
-        transform: translateY(0px);
+        transform: translate3d(0, 0, 0);
     }
 }
 
+/* Вікно кліпу mp4 */
+#videoDisplay video {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    background: #000000;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 /* ==========================================================================
-   4. СЕКЦІЯ ГОЛОВНОЇ ЦИТАТИ (ОДРАЗУ ПІД ФОТО)
+   4. СЕКЦІЯ ЦИТАТИ
    ========================================================================== */
 .motto-section {
     width: 100%;
@@ -117,7 +142,7 @@ header {
 }
 
 /* ==========================================================================
-   5. ПРЕМІАЛЬНИЙ ONE LINE АУДІОПЛЕЄР
+   5. ПРЕМІАЛЬНІ ПРОЗОРІ КНОПКИ ТА ПРОГРЕС-БАР
    ========================================================================== */
 .audio-player {
     background: transparent;
@@ -135,6 +160,7 @@ header {
     gap: 28px;
 }
 
+/* Кнопки: Завжди прозорі всередині */
 .control-btn {
     background: transparent !important;
     color: var(--text-primary) !important;
@@ -176,14 +202,17 @@ header {
     fill: currentColor;
 }
 
+/* Прогрес-бар із чутливим полем для зручного тач-кліку перемотування */
 .progress-container {
     width: 80%;
     margin: 0 auto;
-    height: 3px;
+    height: 4px;
     background: #e9ecef;
     border-radius: 2px;
-    overflow: hidden;
+    position: relative;
     cursor: pointer;
+    padding: 6px 0; /* Зона для легкого попадання пальцем */
+    background-clip: content-box;
 }
 
 .progress-bar {
@@ -191,7 +220,7 @@ header {
     width: 0%;
     background: var(--text-primary);
     border-radius: 2px;
-    transition: width 0.1s linear;
+    pointer-events: none;
 }
 
 /* ==========================================================================
@@ -232,7 +261,7 @@ header {
 }
 
 /* ==========================================================================
-   7. СЛУЖБОВІ СТИЛІ ТА ФУТЕР
+   7. ФУТЕР ТА СЛУЖБОВІ СТИЛІ
    ========================================================================== */
 .footer {
     font-size: 0.75rem;
@@ -251,26 +280,10 @@ header {
    8. АДАПТИВНІСТЬ ДЛЯ СМАРТФОНІВ
    ========================================================================== */
 @media (max-width: 480px) {
-    body {
-        padding: 40px 16px;
-    }
-    .container {
-        gap: 40px;
-    }
-    .image-container {
-        max-width: 340px; /* Оптимальне збільшення на мобільних */
-    }
-    .layer-girl {
-        max-height: 55vh;
-    }
-    .birthday-text-container {
-        width: 88%;
-        font-size: 1rem;
-    }
-    .motto-text {
-        font-size: 1.15rem;
-    }
-    .audio-controls {
-        gap: 20px;
-    }
+    body { padding: 40px 16px; }
+    .container { gap: 40px; }
+    .media-wrapper { max-width: 340px; min-height: 240px; }
+    .birthday-text-container { width: 88%; font-size: 1rem; }
+    .motto-text { font-size: 1.15rem; }
+    .audio-controls { gap: 20px; }
 }
